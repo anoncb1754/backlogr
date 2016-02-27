@@ -1,0 +1,29 @@
+{
+  "name": "backlogr",
+  "version": "1.0.0",
+  "description": "Creating and Managing Epics, User Stories, Wireframes and more for backlogs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anoncb1754/backlogr.git"
+  },
+  "keywords": [
+    "backlog",
+    "user",
+    "stories",
+    "epics",
+    "wireframes"
+  ],
+  "author": "Carl Bednorz",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/anoncb1754/backlogr/issues"
+  },
+  "homepage": "https://github.com/anoncb1754/backlogr#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
