@@ -1,9 +1,12 @@
-var assert = require('assert');
+
 var chai = require('chai');
+var assert = chai.assert
 var chaiHttp = require('chai-http');
 var expect = chai.expect;
 var server = require('../app.js');
 var should = chai.should();
+
+var Project = require('../models/project');
 
 chai.use(chaiHttp);
 
@@ -16,13 +19,55 @@ describe('Projects', function() {
       .end(function(err, res){
         res.should.have.status(200);
         res.should.be.json;
-        res.body.should.be.a('array');
+        //res.body.should.be.a('array');
+        res.body[0].should.have.property('name');
+        res.body[0].should.have.property('description');
+        res.body[0].should.have.property('_id');
         done(err);
       });
   });
 
-  it('should list a SINGLE project on /project/<id>');
-  it('should add a SINGLE project on /projects POST');
+  it('should list a SINGLE project on /project/<id>', function(done){
+    var newProject = new Project({
+      name: "New Project Name",
+      description: "New Project Description"
+    });
+
+    newProject.save(function(err, data){
+      chai.request(server)
+        .get('/projects/'+data.id)
+        .end(function(err, res){
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a('object');
+          res.body.should.have.property('status');
+          res.body.should.have.property('success_detail');
+          assert.equal(res.body['success_detail']['name'], "New Project Name");
+          assert.equal(res.body['success_detail']['description'], "New Project Description");
+          done(err);
+        });
+    });
+
+
+
+  });
+  it('should add a SINGLE project on /projects POST', function(done){
+    chai.request(server)
+      .post('/projects')
+      .send({"name": "This is a test title", "description": "This is a description"})
+      .end(function(err, res){
+        res.should.have.status(201);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('status');
+        res.body.should.have.property('success_message');
+        res.body.should.have.property('success_detail');
+        assert.equal(res.body['status'], 201)
+        assert.typeOf(res.body['success_message'], 'string');
+        assert.typeOf(res.body['success_detail'], 'object');
+        done();
+      })
+  });
   it('should update a SINGLE project on /project/<id> PUT');
   it('should delete a single project on /project/<id> DELETE');
 });
