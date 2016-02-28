@@ -6,6 +6,11 @@ app.get('/', function (req, res){
 });
 
 
+app.get('/json', function (req, res){
+  res.json({"Hello":"World"});
+});
+
+
 app.listen(3000, function() {
   console.log("Example app listening on port 3000!");
 });

@@ -1,5 +1,11 @@
 # Specs for Backlogr
 
+##Tool setup
+
+* Use Typescript
+* Use Mocca and Chai for Unittests
+** npm install -g mocha chai
+* Use Angular for the frontend stuff
 
 ## Model Layout
 
